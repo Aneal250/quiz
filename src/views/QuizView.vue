@@ -245,7 +245,6 @@ h2 {
 
 p {
   color: #8f8f8f;
-  font-size: 1.5rem;
   text-align: center;
 }
 </style>

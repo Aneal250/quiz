@@ -1,11 +1,10 @@
 <template>
-  <nav>
-    <router-link to="/">home</router-link>
-    <router-link to="/quiz">quiz</router-link>
-    <router-view></router-view>
-  </nav>
+  <NavView />
+  <router-view></router-view>
 </template>
 
-<script setup></script>
+<script setup>
+import NavView from "./views/NavView.vue";
+</script>
 
 <style lang="scss" scoped></style>
