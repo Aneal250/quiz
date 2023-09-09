@@ -6,7 +6,7 @@
     <div>
       <nav>
         <router-link to="/" class="px-4">Home</router-link>
-        <router-link to="/quiz" class="px-4">Quiz</router-link>
+        <router-link to="/single-quiz" class="px-4">Quiz</router-link>
       </nav>
     </div>
   </div>
