@@ -1,4 +1,8 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  createWebHistory,
+} from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import QuizView from "../views/QuizView.vue";
 import SingleQuizView from "../views/SingleQuizView.vue";
@@ -22,7 +26,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

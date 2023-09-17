@@ -1,4 +1,4 @@
-const data = [
+export const Quizdata = [
   {
     id: 1,
     quiz: [

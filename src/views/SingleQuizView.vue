@@ -1,84 +1,3 @@
-<script setup>
-import { ref, computed } from "vue";
-
-const questions = ref([
-  {
-    question: "What is Vue?",
-    answer: 0,
-    options: ["A framework", "A library", "A type of hat"],
-    selected: null,
-  },
-  {
-    question: "What is Vuex used for?",
-    answer: 2,
-    options: ["Eating a delicious snack", "Viewing things", "State management"],
-    selected: null,
-  },
-  {
-    question: "What is Vue Router?",
-    answer: 1,
-    options: [
-      "An ice cream maker",
-      "A routing library for Vue",
-      "Burger sauce",
-    ],
-    selected: null,
-  },
-  {
-    question: "What is a Prop",
-    answer: 2,
-    options: [
-      "A prop is a function that is reusable",
-      "A prop is a hook that is called by a parent?",
-      "Data is passed from the parent component to the child component using Component Prop.",
-    ],
-    selected: null,
-  },
-  {
-    question: "what is reactivity",
-    answer: 2,
-    options: [
-      "When you change the data value, the page is updated to reflect the changes.",
-      "React to given elements",
-      "Better way to place things together and After",
-    ],
-    selected: null,
-  },
-]);
-
-const quizCompleted = ref(false);
-const currentQuestion = ref(0);
-const score = computed(() => {
-  let value = 0;
-  questions.value.map((q) => {
-    if (q.selected != null && q.answer == q.selected) {
-      value++;
-    }
-  });
-  return value;
-});
-
-const getCurrentQuestion = computed(() => {
-  let question = questions.value[currentQuestion.value];
-  question.index = currentQuestion.value;
-  return question;
-});
-
-const SetAnswer = (e) => {
-  questions.value[currentQuestion.value].selected = e.target.value;
-  e.target.value = null;
-};
-
-const NextQuestion = () => {
-  if (currentQuestion.value < questions.value.length - 1) {
-    currentQuestion.value++;
-    return;
-  }
-
-  quizCompleted.value = true;
-};
-</script>
-
 <template>
   <main class="app">
     <h1>The Single Quiz Page</h1>
@@ -112,7 +31,7 @@ const NextQuestion = () => {
             :name="getCurrentQuestion.index"
             :value="index"
             v-model="getCurrentQuestion.selected"
-            :disabled="getCurrentQuestion.selected"
+            :disabled="getCurrentQuestion.selected != null"
             @change="SetAnswer"
           />
           <span>{{ option }}</span>
@@ -136,6 +55,61 @@ const NextQuestion = () => {
     </section>
   </main>
 </template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { Quizdata } from "../data/quiz";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const id = route.params.id;
+
+const questions = ref([]);
+
+// Filter the Quizdata array based on the id
+const filteredQuestions = computed(() => {
+  const filteredQuiz = Quizdata.find((quiz) => quiz.id === Number(id));
+  return filteredQuiz ? filteredQuiz.quiz : [];
+});
+
+// Set questions to the computed filteredQuestions value
+questions.value = filteredQuestions.value;
+
+const quizCompleted = ref(false);
+const currentQuestion = ref(0);
+
+const score = computed(() => {
+  let value = 0;
+  questions.value.forEach((q) => {
+    if (q.selected !== null && q.answer == q.selected) {
+      value++;
+    }
+  });
+  return value;
+});
+
+const getCurrentQuestion = computed(() => {
+  let question = questions.value[currentQuestion.value];
+  question.index = currentQuestion.value;
+  return question;
+});
+
+const SetAnswer = (e) => {
+  questions.value[currentQuestion.value].selected = e.target.value;
+};
+
+const NextQuestion = () => {
+  if (currentQuestion.value < questions.value.length - 1) {
+    currentQuestion.value++;
+  } else {
+    quizCompleted.value = true;
+  }
+};
+</script>
+
+<style>
+/* Your CSS styles here */
+</style>
 
 <style>
 * {
