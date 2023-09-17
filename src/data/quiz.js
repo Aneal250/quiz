@@ -1,6 +1,8 @@
 export const Quizdata = [
   {
     id: 1,
+    title: "Vue 3 questions",
+    description: "Beginers intro to Vue 3 questions",
     quiz: [
       {
         question: "What is Vue?",
@@ -52,6 +54,8 @@ export const Quizdata = [
   },
   {
     id: 2,
+    title: "Introductions to ReactJs",
+    description: "Beginers intro to Reactjs  questions",
     quiz: [
       {
         question: "What is reactJs?",

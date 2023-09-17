@@ -1,7 +1,5 @@
 <template>
   <main class="app">
-    <h1>The Single Quiz Page</h1>
-
     <section class="quiz" v-if="!quizCompleted">
       <div class="quiz-info">
         <span class="question">{{ getCurrentQuestion.question }}</span>
@@ -52,6 +50,7 @@
     <section v-else>
       <h2>You have finished the quiz!</h2>
       <p>Your score is {{ score }}/{{ questions.length }}</p>
+      <button @click="backHome">back to homee</button>
     </section>
   </main>
 </template>
@@ -59,9 +58,10 @@
 <script setup>
 import { ref, computed } from "vue";
 import { Quizdata } from "../data/quiz";
-import { useRoute } from "vue-router";
+import { routerKey, useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 const id = route.params.id;
 
 const questions = ref([]);
@@ -105,11 +105,17 @@ const NextQuestion = () => {
     quizCompleted.value = true;
   }
 };
-</script>
 
-<style>
-/* Your CSS styles here */
-</style>
+const backHome = () => {
+  // Reset currentQuestion and quizCompleted
+  currentQuestion.value = 0;
+  quizCompleted.value = false;
+  questions.value = [];
+
+  // Navigate back to the home page
+  router.push("/");
+};
+</script>
 
 <style>
 * {
